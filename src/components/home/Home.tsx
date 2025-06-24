@@ -4,6 +4,7 @@ import React from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import { fetchUsers } from "../../service/api/fetchUser";
+import Link from "next/link";
 
 const Home = () => {
   const { data, error, isLoading } = useQuery({
@@ -20,60 +21,76 @@ const Home = () => {
   console.log(data.data.map((a: any) => a.name));
 
   return (
-    <div>
-      <div className="hidden md:block max-w-7xl mx-auto mt-5">
-        <h1 className="text-2xl md:text-5xl font-bold text-center mb-2">
-          Broadband users
+    <div className="max-w-7xl mx-auto mt-5">
+      <div>
+        <h1 className="text-xl md:text-5xl font-semibold md:font-bold text-center mb-2">
+          Broadband User&apos;s List
         </h1>
-        <table className="table text-center">
+        <table className="table text-center overflow-x-scroll">
           {/* head */}
           <thead>
-            <tr className="bg-orange-500  text-white text-2xl font-normal ">
+            <tr className="bg-orange-500  text-white ">
               <th>#</th>
-              <th className="text-start">Name</th>
-              <th className="text-start">Mac Address</th>
-              <th>Date</th>
-              <th>Hold up</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th className="text-sm font-light md:text-xl md:font-semibold text-start">
+                Name
+              </th>
+              <th className="text-sm font-light md:text-xl md:font-semibold text-start">
+                Mac Address
+              </th>
+              <th className="text-sm font-light md:text-xl md:font-semibold ">
+                Date
+              </th>
+              <th className="text-sm font-light md:text-xl md:font-semibold ">
+                Hold up
+              </th>
+              <th className="text-sm font-light md:text-xl md:font-semibold ">
+                Status
+              </th>
+              <th className="text-sm font-light md:text-xl md:font-semibold ">
+                Action
+              </th>
             </tr>
           </thead>
           {data?.data?.map((item: any, index: number) => (
             <tbody key={index} className="mt-6">
-              <tr className="border border-orange-200 ">
+              <tr className="text-xs md:text-base border border-orange-200 ">
                 <td>
-                  <p>{index + 1}</p>
+                  <p className="text-xs md:text-base ">{index + 1}</p>
                 </td>
                 {item.status === "Owner" ? (
                   <td>
-                    <h1 className="text-sm text-start text-red-500">
+                    <h1 className="text-xs md:text-base text-start text-red-500">
                       {item.name}
                     </h1>
                   </td>
                 ) : (
                   <td>
-                    <h1 className="text-sm opacity-50 text-start">
+                    <h1 className="text-xs md:text-base opacity-50 text-start">
                       {item.name}
                     </h1>
                   </td>
                 )}
                 <td>
-                  <h1 className="text-start">{item.macAddress}</h1>
+                  <h1 className="text-xs md:text-base text-start">
+                    {item.macAddress}
+                  </h1>
                 </td>
                 <td>
-                  <h1>{item.date}</h1>
+                  <h1 className="text-xs md:text-base ">{item.date}</h1>
                 </td>
                 <td>
-                  <p>{item.holdUp}</p>
+                  <p className="text-xs md:text-base ">{item.holdUp}</p>
                 </td>
                 <td>
-                  <p>{item.payment}</p>
+                  <p className="text-xs md:text-base ">{item.payment}</p>
                 </td>
                 {item.status === "Owner" ? (
-                  <th>no action</th>
+                  <th className="text-xs md:text-base ">no action</th>
                 ) : (
                   <th>
-                    <button className="btn btn-ghost btn-xs">action</button>
+                    <button className="text-xs md:text-base btn btn-ghost btn-xs">
+                      action
+                    </button>
                   </th>
                 )}
               </tr>
@@ -81,50 +98,12 @@ const Home = () => {
           ))}
         </table>
       </div>
-      <div className="block lg:hidden md:hidden max-w-7xl mx-auto mt-5">
-        <h1 className="text-2xl md:text-5xl font-bold text-center mb-2">
-          Broadband users
-        </h1>
-        <table className="table text-center">
-          {/* head */}
-          <thead>
-            <tr className="bg-orange-500  text-white  ">
-              <th>#</th>
-              <th className="text-start">Name</th>
-              <th className="text-start">Mac Address</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          {data?.data?.map((item: any, index: number) => (
-            <tbody key={index} className="mt-6">
-              <tr className="border border-orange-200 ">
-                <td>
-                  <p>{index + 1}</p>
-                </td>
-                {item.status === "Owner" ? (
-                  <td>
-                    <h1 className="text-sm text-start text-red-500">
-                      {item.name}
-                    </h1>
-                  </td>
-                ) : (
-                  <td>
-                    <h1 className="text-sm opacity-50 text-start">
-                      {item.name}
-                    </h1>
-                  </td>
-                )}
-                <td>
-                  <h1 className="text-start">{item.macAddress}</h1>
-                </td>
-
-                <td>
-                  <p>{item.payment}</p>
-                </td>
-              </tr>
-            </tbody>
-          ))}
-        </table>
+      <div className="text-center mt-5">
+        <Link href={"/createUser"}>
+          <button className="px-5 md:px-14 py-2 md:py-3 bg-orange-500 text-white text-xs md:text-base">
+            Add New User
+          </button>
+        </Link>
       </div>
     </div>
   );

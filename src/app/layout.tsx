@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
+import ToastProvider from "@/components/toastProvider/ToastProvider";
 
 // ফন্ট কনফিগারেশন
 const geistSans = Geist({
@@ -32,8 +33,11 @@ export default function RootLayout({
           <div
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           >
-            <Navbar />
-            {children}
+            <div className="max-w-7xl mx-auto bg-white h-full">
+              <Navbar />
+              {children}
+              <ToastProvider />
+            </div>
           </div>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
